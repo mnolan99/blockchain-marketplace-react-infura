@@ -1,0 +1,54 @@
+.header {
+  border-bottom: 5px solid black;
+  background-color: #fcfcfc;
+}
+
+.appName {
+  height: 80px;
+  margin-right: 20px;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+}
+
+.ant-input-search-button {
+  border-radius: 50px;
+}
+
+.subheader {
+  background-color: #fcfcfc;
+  color: black;
+  font-weight: 400;
+  padding: 5px 25px;
+  font-family: "Montserrat", sans-serif;
+}
+
+.categories {
+  color: black;
+  font-family: "Montserrat", sans-serif;
+}
+
+.categories:hover {
+  cursor: pointer;
+  color: #afafc3;
+}
+
+.link.ant-btn:hover {
+  cursor: pointer;
+  color: #afafc3;
+  text-decoration: none;
+}
+
+.link.ant-btn {
+  text-align: center;
+  color: black;
+  font-family: "Montserrat";
+  padding: 3px 30px;
+  background-color: #111111;
+  border-color: #111111;
+  color: white;
+  border-radius: 10px;
+  margin-left: 83px;
+}
