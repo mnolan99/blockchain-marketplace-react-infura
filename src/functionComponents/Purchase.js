@@ -26,6 +26,9 @@ function Purchase({ product }) {
 
   // Transfer ETH
   async function transferEth() {
+    // Get the time when confirm button clicked
+    var today = new Date().toLocaleTimeString();
+
     setIsModalVisible(false);
     const productPriceInETH = (product.price * priceOfETH).toString();
     // Transfer ETH to store owner's wallet
@@ -34,12 +37,41 @@ function Purchase({ product }) {
       value: ethers.utils.parseEther(productPriceInETH), // eth amount to transfer (in wei)
     });
 
+    // Get Block Number
+    const blockNumber = await Provider.getBlockNumber();
+
+    // Get Hash number
+    const hashNumber = transaction.hash;
+
+    // Get transaction details
+    const fetchTransaction = async () => {
+      const detailsArray = [];
+      const transactionDetails = await Provider.getTransaction(hashNumber);
+      const fromAddress = transactionDetails.from;
+      const toAddress = transactionDetails.to;
+
+      // Add transaction details to details array
+      detailsArray.push(today, blockNumber, hashNumber, fromAddress, toAddress);
+
+      // Write transaction details to a txt document and prompt this to be downloaded in the browser
+      // This is used for testing and to gather data for conducting the study
+      var hiddenElement = document.createElement("a");
+      hiddenElement.href = "data:attachment/text," + encodeURI(detailsArray);
+      hiddenElement.target = "_blank";
+      hiddenElement.download = "transactionDetailsInfura.txt";
+      hiddenElement.click();
+    };
+
     // Alert popup to confirm transaction has been successful
     if (transaction) {
       window.alert(
         "Transaction completed successfully. Check your Metamask wallet balance or view your receipt on rinkeby.etherscan.io using hash: " +
-          transaction.hash
+          hashNumber
       );
+      // Run the fetchTransaction function after 40 seconds.
+      // This timeout allows enough time for the transaction
+      // to be processed on the blockchain before fetching the details
+      setTimeout(fetchTransaction, 40000);
     }
   }
 
